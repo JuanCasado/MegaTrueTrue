@@ -10,11 +10,11 @@ void libertad () {
 #define VEL 'V'
 #define PARAR 'P'
 #define SALIR 'X'
-  char vel = 40;
+  char vel = 85;
   boolean control = true;
   menuLibertad();
   while (control) {
-    if (Serial.available() > 0) {
+    if (Serial.available() > 0) { //CREAR MODO JOYSTICK EN BASE A UNA VEL
       switch (lectura_serial ()) {
         case SALIR:
           control = false;
@@ -35,10 +35,9 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, vel);
-              mover_motor (I, vel);
-              delay (100);
+              mover(vel,vel);
             }
+            delay (100);
           }
           break;
         case RETROCEDER:
@@ -48,10 +47,9 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, -vel);
-              mover_motor (I, -vel);
-              delay (100);
+              mover(-vel,-vel);
             }
+            delay (100);
           }
           break;
         case DERECHA:
@@ -61,10 +59,9 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, -vel);
-              mover_motor (I, vel);
-              delay (100);
+              mover(-vel,vel);
             }
+            delay (100);
           }
           break;
         case IZQUIERDA:
@@ -74,10 +71,9 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, vel);
-              mover_motor (I, -vel);
-              delay (100);
+              mover(vel,-vel);
             }
+            delay (100);
           }
           break;
         case AVANZAR1:
@@ -88,12 +84,11 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, vel);
-              mover_motor (I, vel);
-              delay (100);
+              mover(vel,vel); 
               en_d = leerEncoder_d();
               en_i = leerEncoder_i();
             }
+            delay (100);
           }
           parar();
           reset_encoders();
@@ -106,12 +101,11 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, -vel);
-              mover_motor (I, -vel);
-              delay(100);
+              mover(-vel,-vel);
               en_d = leerEncoder_d();
               en_i = leerEncoder_i();
             }
+            delay (100);
           }
           parar();
           reset_encoders();
@@ -124,12 +118,11 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, -vel);
-              mover_motor (I, vel);
-              delay (100);
+              mover(-vel,vel);
               en_d = leerEncoder_d();
               en_i = leerEncoder_i();
             }
+            delay (100);
           }
           parar();
           reset_encoders();
@@ -142,12 +135,11 @@ void libertad () {
             if (d_parar()) {
               parar();
             } else {
-              mover_motor (D, vel);
-              mover_motor (I, -vel);
-              delay(100);
+              mover(vel,-vel);
               en_d = leerEncoder_d();
               en_i = leerEncoder_i();
             }
+            delay (100);
           }
           parar();
           reset_encoders();
@@ -162,4 +154,3 @@ void libertad () {
     }
   }
 }
-

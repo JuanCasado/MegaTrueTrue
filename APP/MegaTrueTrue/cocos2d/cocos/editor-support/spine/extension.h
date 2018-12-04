@@ -168,13 +168,13 @@ void* _spMalloc (size_t size, const char* file, int line);
 void* _spCalloc (size_t num, size_t size, const char* file, int line);
 void* _spRealloc(void* ptr, size_t size);
 void _spFree (void* ptr);
-float _spRandom ();
+float _spRandom (void);
 
 void _spSetMalloc (void* (*_malloc) (size_t size));
 void _spSetDebugMalloc (void* (*_malloc) (size_t size, const char* file, int line));
 void _spSetRealloc(void* (*_realloc) (void* ptr, size_t size));
 void _spSetFree (void (*_free) (void* ptr));
-void _spSetRandom(float (*_random) ());
+void _spSetRandom(float (*_random) (void));
 
 char* _spReadFile (const char* path, int* length);
 

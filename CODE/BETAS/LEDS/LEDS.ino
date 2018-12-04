@@ -1,6 +1,6 @@
 #include <Adafruit_NeoPixel.h>
 #define PIN           9
-#define NUMPIXELS     16
+#define NUMPIXELS     32
 #define D 0
 #define I 1
 
@@ -14,17 +14,29 @@ uint32_t MORADO_ = pixels.Color(255,0,255);
 uint32_t AZUL_CLARO_ = pixels.Color(0,0,255);
 void setup() {
   pixels.begin();
+  pixels.setBrightness(255);
 }
 
 void loop() {
-  for(int i=0;i<NUMPIXELS;i++){
-    pixels.setPixelColor(i, pixels.Color(0,150,0));
-    pixels.show(); 
-  }
+  //mostrar_circulo (AZUL_CLARO_);
+    mostrar_todos (AZUL_OSCURO_);
+    delay(1000);
+    mostrar_todos (BLANCO_);
+    delay(1000);
+    mostrar_todos (VERDE_);
+    delay(1000);
+    mostrar_todos (ROJO_);
+    delay(1000);
+    mostrar_todos (AMARILLO_);
+    delay(1000);
+    mostrar_todos (MORADO_);
+    delay(1000);
+    mostrar_todos (AZUL_CLARO_);
+    delay(1000);
 }
 
 void mostrar_circulo (uint32_t color){
-#define T_CIRCULO 100
+#define T_CIRCULO 1000
   for(int i=0;i<NUMPIXELS;i++){
     pixels.setPixelColor(i, color);
     pixels.show(); 
@@ -66,4 +78,3 @@ void mostrar_todos (uint32_t color){
   }
   pixels.show(); 
 }
-

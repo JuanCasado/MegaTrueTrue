@@ -2,14 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion PROP_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "com.complubot.MegaTrueTrue"
+        applicationId "com.mrblissfulgrin.MegaTrueTrue"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "1.1"
 
         externalNativeBuild {
             if (PROP_BUILD_TYPE == 'ndk-build') {
@@ -102,6 +101,7 @@ android {
             }
         }
     }
+    buildToolsVersion '27.0.3'
 }
 
 android.applicationVariants.all { variant ->

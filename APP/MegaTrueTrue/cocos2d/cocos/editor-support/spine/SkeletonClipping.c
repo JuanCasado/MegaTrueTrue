@@ -167,7 +167,7 @@ int /*boolean*/ _clip(spSkeletonClipping* self, float x1, float y1, float x2, fl
 					spFloatArray_add(output, inputY2);
 					continue;
 				}
-				c0 = inputY2 - inputY, c2 = inputX2 - inputX;
+                c0 = inputY2 - inputY; c2 = inputX2 - inputX;
 				ua = (c2 * (edgeY - inputY) - c0 * (edgeX - inputX)) / (c0 * (edgeX2 - edgeX) - c2 * (edgeY2 - edgeY));
 				spFloatArray_add(output, edgeX + (edgeX2 - edgeX) * ua);
 				spFloatArray_add(output, edgeY + (edgeY2 - edgeY) * ua);

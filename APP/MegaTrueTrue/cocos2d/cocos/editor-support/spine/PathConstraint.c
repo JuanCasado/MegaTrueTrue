@@ -116,7 +116,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 			spBone* bone = bones[i];
 			setupLength = bone->data->length;
 			if (setupLength == 0) setupLength = 0.000000001f;
-			x = setupLength * bone->a, y = setupLength * bone->c;
+            x = setupLength * bone->a; y = setupLength * bone->c;
 			length = SQRT(x * x + y * y);
 			if (scale) lengths[i] = length;
 			spaces[++i] =  (lengthSpacing ? setupLength + spacing : spacing) * length / setupLength;
@@ -129,7 +129,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 
 	positions = spPathConstraint_computeWorldPositions(self, attachment, spacesCount, tangents,
 		data->positionMode == SP_POSITION_MODE_PERCENT, spacingMode == SP_SPACING_MODE_PERCENT);
-	boneX = positions[0], boneY = positions[1], offsetRotation = self->data->offsetRotation;
+    boneX = positions[0]; boneY = positions[1]; offsetRotation = self->data->offsetRotation;
 	tip = 0;
 	if (offsetRotation == 0)
 		tip = rotateMode == SP_ROTATE_MODE_CHAIN;
@@ -142,7 +142,7 @@ void spPathConstraint_apply (spPathConstraint* self) {
 		spBone* bone = bones[i];
 		CONST_CAST(float, bone->worldX) += (boneX - bone->worldX) * translateMix;
 		CONST_CAST(float, bone->worldY) += (boneY - bone->worldY) * translateMix;
-		x = positions[p], y = positions[p + 1], dx = x - boneX, dy = y - boneY;
+        x = positions[p]; y = positions[p + 1]; dx = x - boneX; dy = y - boneY;
 		if (scale) {
 			length = lengths[i];
 			if (length != 0) {
@@ -212,9 +212,9 @@ static void _addCurvePosition (float p, float x1, float y1, float cx1, float cy1
 	float ut, ut3, uut3, utt3;
 	float x, y;
 	if (p == 0 || _isNan(p, 0)) p = 0.0001f;
-	tt = p * p, ttt = tt * p, u = 1 - p, uu = u * u, uuu = uu * u;
-	ut = u * p, ut3 = ut * 3, uut3 = u * ut3, utt3 = ut3 * p;
-	x = x1 * uuu + cx1 * uut3 + cx2 * utt3 + x2 * ttt, y = y1 * uuu + cy1 * uut3 + cy2 * utt3 + y2 * ttt;
+    tt = p * p; ttt = tt * p; u = 1 - p; uu = u * u; uuu = uu * u;
+    ut = u * p; ut3 = ut * 3; uut3 = u * ut3; utt3 = ut3 * p;
+    x = x1 * uuu + cx1 * uut3 + cx2 * utt3 + x2 * ttt; y = y1 * uuu + cy1 * uut3 + cy2 * utt3 + y2 * ttt;
 	out[o] = x;
 	out[o + 1] = y;
 	if (tangents) out[o + 2] = ATAN2(y - (y1 * uu + cy1 * ut * 2 + cy2 * tt), x - (x1 * uu + cx1 * ut * 2 + cx2 * tt));
@@ -235,7 +235,7 @@ float* spPathConstraint_computeWorldPositions(spPathConstraint* self, spPathAtta
 	}
 	out = self->positions;
 	closed = path->closed;
-	verticesLength = path->super.worldVerticesLength, curveCount = verticesLength / 6, prevCurve = PATHCONSTRAINT_NONE;
+    verticesLength = path->super.worldVerticesLength; curveCount = verticesLength / 6; prevCurve = PATHCONSTRAINT_NONE;
 
 	if (!path->constantSpeed) {
 		float* lengths = path->lengths;
@@ -336,7 +336,7 @@ float* spPathConstraint_computeWorldPositions(spPathConstraint* self, spPathAtta
 	}
 	curves = self->curves;
 	pathLength = 0;
-	x1 = world[0], y1 = world[1], cx1 = 0, cy1 = 0, cx2 = 0, cy2 = 0, x2 = 0, y2 = 0;
+    x1 = world[0]; y1 = world[1]; cx1 = 0; cy1 = 0; cx2 = 0; cy2 = 0; x2 = 0; y2 = 0;
 	for (i = 0, w = 2; i < curveCount; i++, w += 6) {
 		cx1 = world[w];
 		cy1 = world[w + 1];

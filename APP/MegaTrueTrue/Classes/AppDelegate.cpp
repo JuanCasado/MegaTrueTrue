@@ -1,5 +1,4 @@
 #include "AppDelegate.h"
-#include "MegaTrueTrue.hpp"
 
 //#define USE_AUDIO_ENGINE 1
 //#define USE_SIMPLE_AUDIO_ENGINE 1
@@ -48,12 +47,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithFullScreen("ColorQueue");
+        glview = GLViewImpl::createWithFullScreen("MegaTrueTrue");
         director->setOpenGLView(glview);
     }
     director->setAnimationInterval(1.0f / 60);
     
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+    if (getScreenOrientation ()){
+        glview->setDesignResolutionSize(designResolutionSize.height, designResolutionSize.width, ResolutionPolicy::SHOW_ALL);
+    } else {
+        glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+    }
     
     auto frameSize = glview->getFrameSize();
     if (frameSize.height > mediumResolutionSize.height){
@@ -64,7 +67,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
     }
     
-    director->setClearColor(Color4F(1, 1, 1, 0));
+    director->setClearColor(Color4F(0, 0, 0, 0));
     
     register_all_packages();
     auto megaTrueTrue = MegaTrueTrue::createScene();
@@ -74,22 +77,38 @@ bool AppDelegate::applicationDidFinishLaunching() {
     return true;
 }
 
+void AppDelegate::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+    if (newWidth <= 0 || newHeight <= 0){
+        return;
+    }
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (glview){
+        auto size = glview->getFrameSize();
+        if (size.equals(Size(newWidth, newHeight))){
+            return;
+        }
+        glview->setFrameSize(newWidth, newHeight);
+        if (newWidth > newHeight){
+            glview->setDesignResolutionSize(designResolutionSize.height, designResolutionSize.width, ResolutionPolicy::SHOW_ALL);
+        } else {
+            glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
+        }
+    }
+}
+
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
-#if USE_AUDIO_ENGINE
-    AudioEngine::pauseAll();
-#elif USE_SIMPLE_AUDIO_ENGINE
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-    SimpleAudioEngine::getInstance()->pauseAllEffects();
-#endif
 }
 
 void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
-#if USE_AUDIO_ENGINE
-    AudioEngine::resumeAll();
-#elif USE_SIMPLE_AUDIO_ENGINE
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-    SimpleAudioEngine::getInstance()->resumeAllEffects();
-#endif
+}
+
+bool AppDelegate::getScreenOrientation (){
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    auto size = glview->getFrameSize();
+    return size.width > size.height;
 }

@@ -44,7 +44,9 @@ void loop() {
     client = server.available();
     toSend = false;
   }
-  if (Serial.available()) {
+  if (Serial.available()) { //ELIMINAR LÓGICA INTERMEDIA
+    //CREAR UN BUFFER DE RECEPCIÓN DE DATOS PUROS QUE SE ENVÍE EN BASE A UN 
+    //CARACTER TERMINADOR RECIBIDO DESDE EL MASTER
     switch (Serial.read() & ~0x20) {
       case 'M': //MENU
         state = (Serial.read() & ~0x20);
@@ -91,4 +93,3 @@ void loop() {
     }
   }
 }
-

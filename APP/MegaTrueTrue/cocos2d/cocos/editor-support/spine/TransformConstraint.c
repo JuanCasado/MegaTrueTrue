@@ -67,7 +67,7 @@ void _spTransformConstraint_applyAbsoluteWorld (spTransformConstraint* self) {
 		modified = 0;
 
 		if (rotateMix != 0) {
-			a = bone->a, b = bone->b, c = bone->c, d = bone->d;
+            a = bone->a; b = bone->b; c = bone->c; d = bone->d;
 			r = ATAN2(tc, ta) - ATAN2(c, a) + offsetRotation;
 			if (r > PI) r -= PI2;
 			else if (r < -PI) r += PI2;
@@ -103,7 +103,7 @@ void _spTransformConstraint_applyAbsoluteWorld (spTransformConstraint* self) {
 		}
 
 		if (shearMix > 0) {
-			b = bone->b, d = bone->d;
+            b = bone->b; d = bone->d;
 			by = ATAN2(d, b);
 			r = ATAN2(td, tb) - ATAN2(tc, ta) - (by - ATAN2(bone->c, bone->a));
 			s = SQRT(b * b + d * d);
@@ -133,7 +133,7 @@ void _spTransformConstraint_applyRelativeWorld (spTransformConstraint* self) {
 		modified = 0;
 
 		if (rotateMix != 0) {
-			a = bone->a, b = bone->b, c = bone->c, d = bone->d;
+            a = bone->a; b = bone->b; c = bone->c; d = bone->d;
 			r = ATAN2(tc, ta) + offsetRotation;
 			if (r > PI) r -= PI2;
 			else if (r < -PI) r += PI2;
@@ -168,7 +168,7 @@ void _spTransformConstraint_applyRelativeWorld (spTransformConstraint* self) {
 			r = ATAN2(td, tb) - ATAN2(tc, ta);
 			if (r > PI) r -= PI2;
 			else if (r < -PI) r += PI2;
-			b = bone->b, d = bone->d;
+            b = bone->b; d = bone->d;
 			r = ATAN2(d, b) + (r - PI / 2 + offsetShearY) * shearMix;
 			s = SQRT(b * b + d * d);
 			CONST_CAST(float, bone->b) = COS(r) * s;
@@ -198,13 +198,13 @@ void _spTransformConstraint_applyAbsoluteLocal (spTransformConstraint* self) {
 			rotation += r * rotateMix;
 		}
 
-		x = bone->ax, y = bone->ay;
+        x = bone->ax; y = bone->ay;
 		if (translateMix != 0) {
 			x += (target->ax - x + self->data->offsetX) * translateMix;
 			y += (target->ay - y + self->data->offsetY) * translateMix;
 		}
 
-		scaleX = bone->ascaleX, scaleY = bone->ascaleY;
+        scaleX = bone->ascaleX; scaleY = bone->ascaleY;
 		if (scaleMix > 0) {
 			if (scaleX > 0.00001) scaleX = (scaleX + (target->ascaleX - scaleX + self->data->offsetScaleX) * scaleMix) / scaleX;
 			if (scaleY > 0.00001) scaleY = (scaleY + (target->ascaleY - scaleY + self->data->offsetScaleY) * scaleMix) / scaleY;

@@ -14,7 +14,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg6553"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    sodipodi:docname="tarjetas_de_movimiento.svg">
   <defs
      id="defs6547">
@@ -379,15 +379,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="-122.06442"
-     inkscape:cy="417.79103"
+     inkscape:cx="237.54988"
+     inkscape:cy="660.22764"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-width="1646"
+     inkscape:window-height="1005"
+     inkscape:window-x="34"
+     inkscape:window-y="1"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata6550">
@@ -406,7 +406,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,-15.224635,266.06955)"
+       transform="matrix(1.151941,0,0,-1.152562,-107.46395,881.98179)"
        id="g294">
       <g
          id="g296"
@@ -580,7 +580,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,-25.474395,266.06955)"
+       transform="matrix(1.151941,0,0,-1.152562,-141.17147,881.98179)"
        id="g382">
       <g
          id="g384"
@@ -763,7 +763,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,-35.723982,266.06955)"
+       transform="matrix(1.1519327,0,0,-1.152562,-175.03497,881.98179)"
        id="g474">
       <g
          id="g476"
@@ -911,7 +911,7 @@
       </g>
     </g>
     <g
-       transform="matrix(0.35277777,0,0,-0.35277777,138.10941,184.86416)"
+       transform="matrix(1.151941,0,0,-1.1525682,-275.15235,616.67788)"
        id="g550">
       <g
          id="g552"
@@ -1063,15 +1063,5 @@
         </g>
       </g>
     </g>
-    <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.86589253;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect5194"
-       width="159.13411"
-       height="211.49675"
-       x="9.484807"
-       y="79.190964"
-       ry="10.496203"
-       inkscape:transform-center-x="0.53453901"
-       inkscape:transform-center-y="-3.7417737" />
   </g>
 </svg>

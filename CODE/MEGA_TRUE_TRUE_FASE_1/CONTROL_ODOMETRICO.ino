@@ -152,19 +152,9 @@ void control_odometrico(boolean from)
               vel_d = (errorD * p_odom_d) + (integral_d * i_odom_d) - (diferencial * d_odom_i);
             }
             motor = !motor;
-
-            if (en_margen_d) {
-              mover_motor (D, 0);
-            }
-            else {
-              mover_motor (D, vel_d);
-            }
-            if (en_margen_i) {
-              mover_motor (I, 0);
-            }
-            else {
-              mover_motor (I, vel_i);
-            }
+            mover(vel_d,vel_i);
+            //AÑADIR COMPROBACION DE FIN DE ACCIÓN -> done_d / done_i
+            
             //INFO
             Serial.println("---");
             Serial.print(en_d);
@@ -180,10 +170,8 @@ void control_odometrico(boolean from)
             Serial.print ("  ");
             Serial.println (vel_i);
             Serial.println (diferencial);
-            Serial2.write('P');
-            Serial2.write(map(errorD + errorI,-comandos[indice] ,comandos[indice] ,0 ,200 ));
             if (Serial.available() > 0) {
-              if ((Serial.read() & ~0x20) == SALIR) {
+              if (lectura_serial() == SALIR) {
                 indice = datos;
                 done_d = false;
                 done_i = false;
@@ -191,17 +179,7 @@ void control_odometrico(boolean from)
                 integral_d = 0;
                 parar();
                 reset_encoders ();
-              }
-            }
-            if (Serial2.available() > 0) {
-              if ((Serial2.read() & ~0x20) == SALIR) {
-                indice = datos;
-                done_d = false;
-                done_i = false;
-                integral_i = 0;
-                integral_d = 0;
-                parar();
-                reset_encoders ();
+                melodia(3);
               }
             }
             if (done_d && done_i) {
@@ -215,6 +193,7 @@ void control_odometrico(boolean from)
                 reset_encoders ();
                 contador = 0;
                 mostrar_circulo (AZUL_CLARO_);
+                melodia(5);
               }
               else
                 contador++;
@@ -287,12 +266,14 @@ void control_odometrico(boolean from)
           case SALIR:
             control = false;
             menuPrincipal();
+            melodia(4);
             break;
           case AVANZAR:
             if (datos < MAX_DATA) {
               comandos [datos] = AVANZAR;
               datos ++;
               o_avanzar ();
+              melodia(4);
             }
             break;
           case RETROCEDER:
@@ -300,6 +281,7 @@ void control_odometrico(boolean from)
               comandos [datos] = RETROCEDER;
               datos ++;
               o_retroceder ();
+              melodia(4);
             }
             break;
           case DERECHA:
@@ -307,6 +289,7 @@ void control_odometrico(boolean from)
               comandos [datos] = DERECHA;
               datos ++;
               o_derecha();
+              melodia(4);
             }
             break;
           case IZQUIERDA:
@@ -314,17 +297,21 @@ void control_odometrico(boolean from)
               comandos [datos] = IZQUIERDA;
               datos ++;
               o_izquierda();
+              melodia(4);
             }
             break;
           case GO:
             iniciado = true;
+            melodia(4);
             o_go();
             break;
           case INFO:
             menuOdometria ();
+            melodia(4);
             break;
           default:
             Serial.println ("COMANDO ERRONEO");
+            melodia(3);
             break;
         }
       }
@@ -350,4 +337,3 @@ void o_go () {
 void o_err () {
   Serial.println("ERR TARJETA");
 }
-

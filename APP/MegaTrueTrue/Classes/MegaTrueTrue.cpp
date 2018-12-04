@@ -17,7 +17,7 @@ bool MegaTrueTrue::init(){
     if (myclock==nullptr){
         return false;
     }
-    auto truetrue = Sprite::create("truetrue.png");
+    truetrue = Sprite::create("truetrue.png");
     if (truetrue == nullptr){
         return false;
     }
@@ -25,31 +25,36 @@ bool MegaTrueTrue::init(){
     if (title ==  nullptr){
         return false;
     }
-    buscando.store(true,std::memory_order_seq_cst);
-    this->run();
     auto screen = Director::getInstance()->getSafeAreaRect().size;
-    truetrue->setPosition(Vec2(screen.width*0.5, screen.height*0.505));
-    truetrue->setColor(Color3B(0,0,200));
-    this->addChild(truetrue);
     countdownTimer = ProgressTimer::create(myclock);
     countdownTimer->setType(ProgressTimer::Type::RADIAL);
     countdownTimer->setPercentage(0);
-    countdownTimer->setPosition(Vec2(screen.width*0.5, screen.height*0.5));
     this->addChild(countdownTimer);
+    truetrue->setColor(Color3B(0,0,200));
+    this->addChild(truetrue);
     percentage = 0;
     direction = true;
     timer = 0;
-    
+
     title->setAnchorPoint(Vec2(0.5, 0.5));
-    title->setPosition(screen.width*0.5, screen.height*0.85);
-    title->setColor(Color3B(0, 0, 0));
     this->addChild(title);
+    
+    if (AppDelegate::getScreenOrientation()){
+        setLandscape();
+    } else {
+        setPortrait();
+    }
     
     scheduleUpdate();
     return true;
 }
 
 void MegaTrueTrue::update (float t){
+    if (AppDelegate::getScreenOrientation()){
+        setLandscape();
+    } else {
+        setPortrait();
+    }
     if (timer < 3){
         if (direction){
             percentage ++;
@@ -64,93 +69,37 @@ void MegaTrueTrue::update (float t){
         }
         countdownTimer->setPercentage(percentage);
     }else{
+        connexion = new Conexion();
         this->unscheduleUpdate();
-        this->end();
-        if (buscando.load(std::memory_order_seq_cst)){
-            title->setString("MegaTrueTrue NOT FOUND");
-            
-            auto conexion = new Conexion (sock);
-            auto director = Director::getInstance();
-            MainMenu *mainMenu = MainMenu::create(conexion);
-            if (mainMenu!=nullptr){
-                director->replaceScene(mainMenu);
-            }
-            
-        }else{
+        if (connexion->isConnected()){
             title->setString("MegaTrueTrue FOUND");
-            char toRecive = '0';
-            recv(sock, &toRecive,sizeof(toRecive),0);
-            auto conexion = new Conexion (sock);
             auto director = Director::getInstance();
-            switch (toRecive) {
-                case 'O':{
-                    Odometria *odometria = Odometria::create(conexion);
-                    if (odometria!=nullptr){
-                        director->replaceScene(odometria);
-                    }
-                    break;
-                }
-                case 'L':{
-                    Libertad *libertad = Libertad::create(conexion);
-                    if (libertad!=nullptr){
-                        director->replaceScene(libertad);
-                    }
-                    break;
-                }
-                case '?':{
-                    MainMenu *mainMenu = MainMenu::create(conexion);
-                    if (mainMenu!=nullptr){
-                        director->replaceScene(mainMenu);
-                    }
-                    break;
-                }
-                case 'C':{
-                    Configuracion *configuracion = Configuracion::create(conexion);
-                    if (configuracion!=nullptr){
-                        director->replaceScene(configuracion);
-                    }
-                    break;
-                }
-                default:
-                    title->setString("MegaTrueTrue LOST");
-                    delete conexion;
-                    break;
-            }
-        }
-    }
-}
-
-void MegaTrueTrue::to_do(){
-    if (buscando.load(std::memory_order_seq_cst)){
-        if ((sock = socket(AF_INET, SOCK_STREAM, 0))>=0){
-            if(connect(sock, (struct sockaddr *)&server, sizeof(struct sockaddr))>=0){
-                buscando.store(false,std::memory_order_seq_cst);
-                struct timeval tv;
-                tv.tv_sec = 15;
-                tv.tv_usec = 0;
-                setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
-                char toSend = 'Z';
-                write(sock, &toSend, sizeof(toSend));
-            }else{
-                close(sock);
+            Basico *basico = Basico::create(connexion, true);
+            if (basico!=nullptr){
+                director->replaceScene(basico);
             }
         }else{
-            close(sock);
+            title->setString("MegaTrueTrue NOT FOUND");
+            auto director = Director::getInstance();
+            Basico *basico = Basico::create(connexion, false);
+            if (basico!=nullptr){
+                director->replaceScene(basico);
+            }
         }
     }
 }
-void MegaTrueTrue::to_end(){
-    if (buscando.load(std::memory_order_seq_cst)){
-        close(sock);
-    }
-}
-void MegaTrueTrue::to_beguin(){
-    server.sin_port = htons(PORT);
-    server.sin_addr.s_addr = inet_addr(IP);
-    server.sin_family = AF_INET;
-    bzero(&(server.sin_zero),8);
-}
 
-MegaTrueTrue::~MegaTrueTrue(){
-    this->end();
+MegaTrueTrue::~MegaTrueTrue(){}
+
+void MegaTrueTrue::setPortrait(){
+    auto screen = Director::getInstance()->getSafeAreaRect().size;
+    title->setPosition(screen.width*0.5, screen.height*0.85);
+    countdownTimer->setPosition(Vec2(screen.width*0.5, screen.height*0.5));
+    truetrue->setPosition(Vec2(screen.width*0.5, screen.height*0.505));
+}
+void MegaTrueTrue::setLandscape(){
+    auto screen = Director::getInstance()->getSafeAreaRect().size;
+    title->setPosition(screen.width*0.5, screen.height*0.85);
+    countdownTimer->setPosition(Vec2(screen.width*0.5, screen.height*0.5));
+    truetrue->setPosition(Vec2(screen.width*0.5, screen.height*0.505));
 }

@@ -8,6 +8,11 @@
 #ifndef Conexion_hpp
 #define Conexion_hpp
 
+#define PORT 5003
+#define IP "192.168.1.1"
+
+#include <signal.h>
+
 #include "Hilo.hpp"
 #include <stdio.h>
 #include <sys/types.h>
@@ -17,27 +22,18 @@
 #include <unistd.h>
 #include <iostream>
 #include <arpa/inet.h>
-#include <atomic>
-#include <vector>
 
-class Conexion : public Hilo {
+class Conexion {
 public:
-    enum To {
-        Odometria,
-        MainMenu,
-        Libertad,
-        Configuracion,
-    };
     Conexion(int sock);
+    Conexion();
     ~Conexion();
-    bool go(Conexion::To to);
-    void startOdometry (std::vector<char> buff);
+    void send(char toSend);
+    void sendVel(char vel_d, char vel_i);
+    bool isConnected ();
 private:
     int sock;
-protected:
-    virtual void to_do();
-    virtual void to_end();
-    virtual void to_beguin();
+    bool connected;
 };
 
 #endif /* Conexion_hpp */

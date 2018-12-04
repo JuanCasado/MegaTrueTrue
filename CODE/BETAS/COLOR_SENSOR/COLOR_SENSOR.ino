@@ -1,9 +1,9 @@
-#define OUT_D 7
-#define OUT_I 8
-#define S2 6
-#define S3 5
-#define LDR_1 0
-#define LDR_2 1
+#define OUT_D 7   //7
+#define OUT_I 8   //8
+#define S2 5      //6
+#define S3 6      //5
+#define LDR_1 A0
+#define LDR_2 A1
 
 #define MAX_BYTE 255
 
@@ -65,7 +65,7 @@ void calcular () {
   boolean negro_d = true;
   boolean negro_i = true;
 
-  for (int x = 0; x < FASE; x++) {
+  for (int x = 0; x < 2; x++) {
     negro_d = negro_d && (color_d[x] < TRESHOLD_COLOR);
     negro_i = negro_i && (color_i[x] < TRESHOLD_COLOR);
     if (color_d[x] > der) {
@@ -147,7 +147,8 @@ void loop()
       }
       color_d[fase] += leer_d();
       color_i[fase] += leer_i();
-      Serial.println(color_d[fase]);
+      //Serial.println(color_d[fase]);
+      delay(5);
       if (contador_color >= VECES_COLOR) {
         color_d[fase] = color_d[fase] >> 3;
         color_i[fase] = color_i[fase] >> 3;
@@ -229,9 +230,10 @@ void loop()
       lectura_ldr += analogRead(LDR_2);
       if (contador_ldr >= VECES_LDR) {
         lectura_ldr = lectura_ldr >> 4;
-        Serial.println(lectura_ldr);
+        //Serial.println(lectura_ldr);
         contador_ldr = 0;
-        Serial.println((hay_tarjeta = (lectura_ldr < TRESHOLD_LDR)) ? "HAY_TARJETA" : "NO HAY_TARJETA");
+        //Serial.println((hay_tarjeta = (lectura_ldr > TRESHOLD_LDR)) ? "HAY_TARJETA" : "NO HAY_TARJETA");
+        hay_tarjeta = (lectura_ldr > TRESHOLD_LDR);
         lectura_ldr = 0;
       } else {
         contador_ldr++;
@@ -239,4 +241,3 @@ void loop()
     }
   }
 }
-

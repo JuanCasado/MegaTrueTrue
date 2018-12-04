@@ -9,39 +9,29 @@ int dato2C = 0;
 int dato2D = 0;
 byte to_read = 0;
 
-void mover_motor (byte motor, int vel) {
-  boolean hacer = false;
-  byte reg;
-  if (motor == D) {
-    hacer = true;
-    reg = SPEED;
-  } else if (motor == I) {
-    reg = TURN;
-    hacer = true;
-  }
-  if (hacer) {
-    if (vel > 0)
-      vel = constrain (vel, vel_min, vel_max);
-    else if (vel < 0)
-      vel = constrain (vel, -vel_max, -vel_min);
-    Wire.beginTransmission(ADD);
-    Wire.write(reg);
-    Wire.write (vel);
-    Wire.endTransmission();
-  }
+void mover (char der, char izq) {
+    Serial.print((int)der);
+    Serial.print("  ");
+    Serial.print((int)izq);
+    Serial.print("  ");
+    if (der > 0)
+      der = constrain (der, vel_min, vel_max);
+    else if (der < 0)
+      der = constrain (der, -vel_max, -vel_min);
+    if (izq > 0)
+      izq = constrain (izq, vel_min, vel_max);
+    else if (izq < 0)
+      izq = constrain (izq, -vel_max, -vel_min);
+    Serial3.write('V');
+    Serial.print((int)der);
+    Serial.print("  ");
+    Serial.println((int)izq);
+    Serial3.write(der+100);
+    Serial3.write(izq+100);
 }
 
 void parar () {
-  Wire.beginTransmission(ADD);
-  Wire.write(SPEED);
-  Wire.write(0);
-  Wire.endTransmission();
-  delay (ESPERA);
-  Wire.beginTransmission(ADD);
-  Wire.write(TURN);
-  Wire.write(0);
-  Wire.endTransmission();
-  delay (ESPERA);
+  Serial3.write('P');
 }
 
 long leerEncoder_i() {
@@ -255,5 +245,3 @@ boolean espera_disponible () {
   }
   return true;
 }
-
-

@@ -9,8 +9,8 @@
 #define LED 13
 #define OUT_D 7
 #define OUT_I 8
-#define S2 6
-#define S3 5
+#define S2 5
+#define S3 6
 #define LDR_1 0
 #define LDR_2 1
 
@@ -56,8 +56,10 @@
 #define VEL_MAX_EPROM 10
 #define P_ODOM_EPROM_D 20
 #define I_ODOM_EPROM_D 30
-#define P_ODOM_EPROM_I 40
-#define I_ODOM_EPROM_I 50
+#define D_ODOM_EPROM_D 40
+#define P_ODOM_EPROM_I 50
+#define I_ODOM_EPROM_I 60
+#define D_ODOM_EPROM_I 70
 
 #define RANGE 100
 #define INICIO_INTEGRAL 80
@@ -78,7 +80,7 @@ float d_odom_i = 0;
 #define ERR_TARJETA 'E'
 
 #define PIN           9
-#define NUMPIXELS     16
+#define NUMPIXELS     32
 #define D 0
 #define I 1
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
@@ -105,7 +107,7 @@ void setup() {
   Wire.begin();
   pixels.begin();
   Serial.begin(115200);
-  Serial2.begin(115200);
+  Serial3.begin(115200);
 
   reset_tarjetas();
 
@@ -113,17 +115,19 @@ void setup() {
   set_vel_min ();
   set_p_odom_d ();
   set_i_odom_d ();
+  set_d_odom_d ();
   set_p_odom_i ();
   set_i_odom_i ();
+  set_d_odom_i ();
   
   iniciar ();
-  sendConfig ();
   
   parar ();
   reset_encoders ();
-  d_odom_i = 0;
-  d_odom_i = 0;
 
+  delay (3000);
+  melodia(1);
+  delay (3000);
   menuPrincipal();
 }
 
@@ -153,7 +157,7 @@ void loop() {
         menuPrincipal ();
         break;
       default:
-        Serial.println ("COMANDO NO VALIDO");
+        Serial.println ("COMANDO NO VALIDO 1");
         break;
     }
   }
@@ -184,3 +188,8 @@ byte lectura_serial (){
   return (Serial.read() & ~0x20);
 }
 
+void melodia (byte number){
+  Wire.beginTransmission(SOUND);
+  Wire.write(number);
+  Wire.endTransmission();
+}

@@ -4,8 +4,7 @@ void menuPrincipal () {
   Serial.println("ODOMETRIA O");
   Serial.println("CONFIGURACION M");
   Serial.println("LIBERTAD L");
-  Serial2.write('M');
-  Serial2.write('M');
+  melodia(2);
 }
 void menuOdometria () {
   Serial.println("Odometria");
@@ -14,8 +13,7 @@ void menuOdometria () {
   Serial.println("DERECHA D");
   Serial.println("IZQUIERDA I");
   Serial.println("GO G");
-  Serial2.write('M');
-  Serial2.write('O');
+  melodia(2);
 }
 void menuLibertad () {
   Serial.println("Libertad");
@@ -29,8 +27,7 @@ void menuLibertad () {
   Serial.println("IZQUIERDA1 'L'");
   Serial.println("VEL 'V'");
   Serial.println("PARAR 'P'");
-  Serial2.write('M');
-  Serial2.write('L');
+  melodia(2);
 }
 void menuConfiguracion () {
   Serial.println("Configuracion");
@@ -41,6 +38,5 @@ void menuConfiguracion () {
   Serial.println("P_ODOM_I 'E'");
   Serial.println("I_ODOM_I 'G'");
   Serial.println("SAVE 'S'");
-  Serial2.write('M');
-  Serial2.write('C');
+  melodia(2);
 }

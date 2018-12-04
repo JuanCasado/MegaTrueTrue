@@ -8,47 +8,28 @@
 #ifndef MegaTrueTrue_hpp
 #define MegaTrueTrue_hpp
 
-#define PORT 80
-#define IP "192.168.1.1"
-
 #include "cocos2d.h"
-#include "Hilo.hpp"
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <iostream>
-#include <arpa/inet.h>
-#include <atomic>
 #include "Conexion.hpp"
-#include "Odometria.hpp"
-#include "MainMenu.hpp"
-#include "Libertad.hpp"
-#include "Configuracion.hpp"
+#include "Basico.hpp"
+#include "AppDelegate.h"
 
-class MegaTrueTrue : public cocos2d::Scene, Hilo{
+class MegaTrueTrue : public cocos2d::Scene {
 public:
     static MegaTrueTrue* createScene();
 private:
     virtual bool init();
     CREATE_FUNC(MegaTrueTrue);
     void update (float t);
+    void setPortrait();
+    void setLandscape();
     cocos2d::Label *title;
+    cocos2d::Sprite *truetrue;
     float percentage;
     bool direction;
     cocos2d::ProgressTimer *countdownTimer;
-    std::atomic_bool buscando;
     int timer;
-    
-    struct sockaddr_in server;
-    int sock;
+    Conexion *connexion;
     ~MegaTrueTrue();
-protected:
-    virtual void to_do();
-    virtual void to_end();
-    virtual void to_beguin();
 };
 
 #endif /* MegaTrueTrue_hpp */

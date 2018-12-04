@@ -1,7 +1,7 @@
 #define DIST_D A2
 #define DIST_I A3
 
-#define MIN_DISTANCE 10
+#define MIN_DISTANCE 21
 
 int distancia_d = MIN_DISTANCE;
 int distancia_i = MIN_DISTANCE;
@@ -31,6 +31,9 @@ void actualizar_distancia (){
       dist_d = 0;
       dist_i = 0;
       contador = 0;
+      Serial.print(distancia_d);
+      Serial.print("\t");
+      Serial.println(distancia_i);
     }else
       contador++;
   }
@@ -39,4 +42,3 @@ void actualizar_distancia (){
 boolean parar(){
   return (distancia_d < MIN_DISTANCE) || (distancia_i < MIN_DISTANCE);
 }
-

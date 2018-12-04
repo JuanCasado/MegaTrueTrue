@@ -132,7 +132,7 @@ struct spAtlasRegion {
 	spAtlasRegion* next;
 };
 
-SP_API spAtlasRegion* spAtlasRegion_create ();
+SP_API spAtlasRegion* spAtlasRegion_create (void);
 SP_API void spAtlasRegion_dispose (spAtlasRegion* self);
 
 #ifdef SPINE_SHORT_NAMES

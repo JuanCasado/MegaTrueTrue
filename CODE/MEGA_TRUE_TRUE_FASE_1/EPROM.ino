@@ -3,8 +3,10 @@ void configuracion (boolean manual) {
 #define VELOCIDAD_MIN 'B'
 #define P_ODOM_D 'C'
 #define I_ODOM_D 'D'
-#define P_ODOM_I 'E'
+#define D_ODOM_D 'E'
+#define P_ODOM_I 'F'
 #define I_ODOM_I 'G'
+#define D_ODOM_I 'H'
 #define SAVE 'S'
 #define SALIR 'X'
   menuConfiguracion();
@@ -32,6 +34,11 @@ void configuracion (boolean manual) {
           Serial.print("I_ODOM_D = ");
           Serial.println((byte)(i_odom_d * RANGE));
           break;
+        case D_ODOM_D:
+          d_odom_d = (float)read_number(manual) / 100;
+          Serial.print("D_ODOM_D = ");
+          Serial.println((byte)(d_odom_i * RANGE));
+          break;
         case P_ODOM_I:
           p_odom_i = (float)read_number(manual) / 100;
           Serial.print("P_ODOM_I = ");
@@ -42,6 +49,11 @@ void configuracion (boolean manual) {
           Serial.print("I_ODOM_I = ");
           Serial.println((byte)(i_odom_i * RANGE));
           break;
+        case D_ODOM_I:
+          d_odom_i = (float)read_number(manual) / 100;
+          Serial.print("D_ODOM_I = ");
+          Serial.println((byte)(d_odom_i * RANGE));
+          break;
         case SAVE:
           EEPROM.update(VEL_MIN_EPROM, vel_min);
           set_vel_min ();
@@ -51,10 +63,15 @@ void configuracion (boolean manual) {
           set_p_odom_d ();
           EEPROM.update(I_ODOM_EPROM_D, (byte)(i_odom_d * RANGE));
           set_i_odom_d ();
+          EEPROM.update(D_ODOM_EPROM_D, (byte)(d_odom_d * RANGE));
+          set_d_odom_d ();
           EEPROM.update(P_ODOM_EPROM_I, (byte)(p_odom_i * RANGE));
-          set_p_odom_i ();
+          set_p_odom_d ();
           EEPROM.update(I_ODOM_EPROM_I, (byte)(i_odom_i * RANGE));
-          set_i_odom_i ();
+          set_i_odom_d ();
+          EEPROM.update(D_ODOM_EPROM_I, (byte)(d_odom_i * RANGE));
+          set_d_odom_d ();
+          melodia(7);
           break;
         case INFO:
           Serial.println("SALIR 'X'");
@@ -81,7 +98,6 @@ void configuracion (boolean manual) {
           Serial.println ("ELIJA MODO:");
           break;
       }
-      sendConfig ();
     }
   }
 }
@@ -110,24 +126,26 @@ void set_i_odom_d () {
   Serial.println((byte)(i_odom_d * RANGE));
 }
 
+void set_d_odom_d () {
+  p_odom_i = (float)EEPROM.read(D_ODOM_EPROM_D) / RANGE;
+  Serial.print("D_ODOM_D = ");
+  Serial.println((byte)(d_odom_d * RANGE));
+}
+
 void set_p_odom_i () {
-  p_odom_i = (float)EEPROM.read(P_ODOM_EPROM_I) / RANGE;
+  p_odom_d = (float)EEPROM.read(P_ODOM_EPROM_I) / RANGE;
   Serial.print("P_ODOM_I = ");
   Serial.println((byte)(p_odom_i * RANGE));
 }
 
 void set_i_odom_i () {
-  i_odom_i = (float)EEPROM.read(I_ODOM_EPROM_I) / RANGE;
+  i_odom_d = (float)EEPROM.read(I_ODOM_EPROM_I) / RANGE;
   Serial.print("I_ODOM_I = ");
   Serial.println((byte)(i_odom_i * RANGE));
 }
 
-void sendConfig () {
-  Serial2.write('C');
-  Serial2.write(volts);
-  Serial2.write((byte)(p_odom_d * RANGE));
-  Serial2.write((byte)(i_odom_d * RANGE));
-  Serial2.write((byte)(p_odom_i * RANGE));
-  Serial2.write((byte)(i_odom_i * RANGE));
+void set_d_odom_i () {
+  p_odom_i = (float)EEPROM.read(D_ODOM_EPROM_I) / RANGE;
+  Serial.print("D_ODOM_I = ");
+  Serial.println((byte)(d_odom_i * RANGE));
 }
-
