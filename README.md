@@ -3,6 +3,8 @@
 The incredible MegaTrueTrue robot but much bigger.
 We have taken the newest educative Corean robot and and made it 8 times bigger.
 
+[The original True True](http://www.truetruebot.com/index/eng "TrueTrue")
+
 This has been my first project with a big robot, with big engines, and a real functional structure.
 It has been engendered with all custom hardware made in Complubot following a modular design in the software and in the hardware. Every part of the robot can be used separated from the rest as an autonomus module but combinning them all together they make this incredible robot.
 
@@ -13,8 +15,11 @@ MegaTrueTrue is an educational robot that has been traveling since it has been b
 
 Right now he is traveling all around Spain to help childrends and teachers to learn robotics and programming in the most beautiful way :)
 You can see its journey in the Complubot's Twitter : 
+
 [Complubot](https://twitter.com/complubot?lang=es "Complubot")
+
 [In the class](https://twitter.com/puerto/status/1068078335325028352 "In the class")
+
 [The MegTrueTrue at Simo](https://twitter.com/TrueTrue_es/status/1062320200341733376 "The MegTrueTrue at Simo")
 
 
