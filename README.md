@@ -37,6 +37,8 @@ You can see its journey in the Complubot's Twitter :
 
 [Download for Android](https://play.google.com/store/apps/details?id=com.mrblissfulgrin.MegaTrueTrue "MegaTrueTrue App")
 
+[Download for iOS](https://itunes.apple.com/es/app/mega-true-true/id1441826675?l=en&mt=8 "MegaTrueTrue App")
+
 [Mr.BlissfulGrin](http://www.mrblissfulgrin.com "mrblissfulgrin")
 
 
